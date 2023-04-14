@@ -67,13 +67,11 @@ TypeError: 'NoneType' object is not subscriptable
             # mask IOU is not yet enabled
             masks_rles = mask_util.encode(np.asarray(masks.permute(1, 2, 0), order="F"))
             assert len(masks_rles) == num_instances
-            
-            ########## 추가 ##########
+
             detected = [
                 _DetectedInstance(classes[i], None, mask_rle=masks_rles[i], color=None, ttl=8)
                 for i in range(num_instances)
             ]
-            ########## 추가 ##########
 
         else:
             masks = None
