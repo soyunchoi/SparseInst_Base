@@ -23,7 +23,31 @@ git clone https://github.com/soyunchoi/SparseInst_Base.git
 # SparseInst code download
 cd SparseInst_Base
 ```
+ 
+ # Inference
+ <b> Checkpoints downlaod </b>
+ 
+| model | backbone | input | aug | AP<sup>val</sup> |  AP  | FPS | weights |
+| :---- | :------  | :---: | :-: |:--------------: | :--: | :-: | :-----: |
+| [SparseInst (G-IAM)](configs/sparse_inst_r50_giam_aug.yaml) | [R-50](https://drive.google.com/file/d/1Ee6nPXlj1eewAnooYtoPtLzbRp_mDxfB/view?usp=sharing) | 608 | &#10003; | 34.2 | 34.7 | 44.6 | [model](https://drive.google.com/file/d/1MK8rO3qtA7vN9KVSBdp0VvZHCNq8-bvz/view?usp=sharing) |
 
+<sup>&#x021A1;</sup>: measured on RTX 3090.
+
+다운로드 이후, SparseInst_Base/weights 폴더 만들어서 안에 넣기
+
+<b> Testing </b>
+
+* <b> Video </b>
+```bash
+python demo.py --config-file <CONFIG> --input <IMAGE-PATH> --output results --opts MODEL.WEIGHTS <MODEL-PATH>
+# example
+python demo.py --config-file configs/sparse_inst_r50_giam.yaml --video-input test.mp4 --output output --opt MODEL.WEIGHTS weights/sparse_inst_r50_giam_aug_2b7d68.pth INPUT.MIN_SIZE_TEST 512
+```
+
+* <b> Webcam </b>
+```bash
+python demo.py --config-file configs/sparse_inst_r50_giam.yaml --webcam --opt MODEL.WEIGHTS weights/sparse_inst_r50_giam_aug_2b7d68.pth INPUT.MIN_SIZE_TEST 512
+```
 
 # Errors
 만약 아래와 같은 오류가 떴다면 아래의 해결방법을 통해 해결 가능
@@ -77,30 +101,4 @@ The aliases was originally deprecated in NumPy 1.20; for more details and guidan
  ```bash
          is_crowd = np.zeros((len(instances),), dtype=np.bool_)
  ```
- 
- # Inference
- <b> Checkpoints downlaod </b>
- 
-| model | backbone | input | aug | AP<sup>val</sup> |  AP  | FPS | weights |
-| :---- | :------  | :---: | :-: |:--------------: | :--: | :-: | :-----: |
-| [SparseInst (G-IAM)](configs/sparse_inst_r50_giam_aug.yaml) | [R-50](https://drive.google.com/file/d/1Ee6nPXlj1eewAnooYtoPtLzbRp_mDxfB/view?usp=sharing) | 608 | &#10003; | 34.2 | 34.7 | 44.6 | [model](https://drive.google.com/file/d/1MK8rO3qtA7vN9KVSBdp0VvZHCNq8-bvz/view?usp=sharing) |
-
-<sup>&#x021A1;</sup>: measured on RTX 3090.
-
-다운로드 이후, SparseInst_Base/weights 폴더 만들어서 안에 넣기
-
-<b> Testing </b>
-
-* <b> Video </b>
-```bash
-python demo.py --config-file <CONFIG> --input <IMAGE-PATH> --output results --opts MODEL.WEIGHTS <MODEL-PATH>
-# example
-python demo.py --config-file configs/sparse_inst_r50_giam.yaml --video-input test.mp4 --output output --opt MODEL.WEIGHTS weights/sparse_inst_r50_giam_aug_2b7d68.pth INPUT.MIN_SIZE_TEST 512
-```
-
-* <b> Webcam </b>
-```bash
-python demo.py --config-file configs/sparse_inst_r50_giam.yaml --webcam --opt MODEL.WEIGHTS weights/sparse_inst_r50_giam_aug_2b7d68.pth INPUT.MIN_SIZE_TEST 512
-```
-
  
