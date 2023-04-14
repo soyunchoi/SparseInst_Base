@@ -60,7 +60,7 @@ File "/data/anaconda3/envs/sparseinst/lib/python3.8/site-packages/detectron2/uti
     _DetectedInstance(classes[i], boxes[i], mask_rle=None, color=None, ttl=8)
 TypeError: 'NoneType' object is not subscriptable
 ```
-<b> Sol) </b> 
+<b> Sol) </b> 들여쓰기 주의 
   Go to `"/data/anaconda3/envs/sparseinst/lib/python3.8/site-packages/detectron2/utils/video_visualizer.py"`
   and replace Line 76-87 with the following:
   ```bash
