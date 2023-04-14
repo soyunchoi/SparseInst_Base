@@ -23,7 +23,7 @@ git clone https://github.com/soyunchoi/SparseInst_Base.git
 # SparseInst code download
 cd SparseInst_Base
 mkdir output
-# 
+# 결과 저장 디렉토리 생성
 ```
  
  # Inference
