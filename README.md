@@ -90,14 +90,15 @@ The aliases was originally deprecated in NumPy 1.20; for more details and guidan
 다운로드 이후, SparseInst/weights 폴더 만들어서 안에 넣기
 
 <b> Testing </b>
-* Video
+
+* <b> Video </b>
 ```bash
 python demo.py --config-file <CONFIG> --input <IMAGE-PATH> --output results --opts MODEL.WEIGHTS <MODEL-PATH>
 # example
 python demo.py --config-file configs/sparse_inst_r50_giam.yaml --video-input test.mp4 --output output --opt MODEL.WEIGHTS weights/sparse_inst_r50_giam_aug_2b7d68.pth INPUT.MIN_SIZE_TEST 512
 ```
 
-* Webcam
+* <b> Webcam </b>
 ```bash
 python demo.py --config-file configs/sparse_inst_r50_giam.yaml --webcam --opt MODEL.WEIGHTS weights/sparse_inst_r50_giam_aug_2b7d68.pth INPUT.MIN_SIZE_TEST 512
 ```
