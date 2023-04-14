@@ -22,6 +22,8 @@ pip install iopath fvcore portalocker yacs timm pyyaml==5.1 shapely
 git clone https://github.com/soyunchoi/SparseInst_Base.git
 # SparseInst code download
 cd SparseInst_Base
+mkdir output
+# 
 ```
  
  # Inference
