@@ -60,7 +60,7 @@ TypeError: 'NoneType' object is not subscriptable
 ```
 <b> Sol) </b>
   Go to `"/data/anaconda3/envs/sparseinst/lib/python3.8/site-packages/detectron2/utils/video_visualizer.py"`
-  and edit content below, Line 76-87:
+  and replace Line 76-87 with the following:
   ```bash
         if predictions.has("pred_masks"):
             masks = predictions.pred_masks
