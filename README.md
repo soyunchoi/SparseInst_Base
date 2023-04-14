@@ -23,7 +23,7 @@ git clone https://github.com/soyunchoi/SparseInst_Base.git
 # SparseInst code download
 cd SparseInst_Base
 mkdir output
-# 결과 저장 디렉토리 생성
+# Create directory for storing results
 ```
  
  # Inference
@@ -60,7 +60,7 @@ File "/data/anaconda3/envs/sparseinst/lib/python3.8/site-packages/detectron2/uti
     _DetectedInstance(classes[i], boxes[i], mask_rle=None, color=None, ttl=8)
 TypeError: 'NoneType' object is not subscriptable
 ```
-<b> Sol) </b>
+<b> Sol) </b> 
   Go to `"/data/anaconda3/envs/sparseinst/lib/python3.8/site-packages/detectron2/utils/video_visualizer.py"`
   and replace Line 76-87 with the following:
   ```bash
