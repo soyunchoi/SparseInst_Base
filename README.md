@@ -19,7 +19,7 @@ python -m pip install detectron2==0.3 -f \
 pip install opencv-python opencv-contrib-python scipy
 pip install iopath fvcore portalocker yacs timm pyyaml==5.1 shapely
 # pip install other package
-git clone https://github.com/soyunchoi/SparseInst_Base
+git clone https://github.com/soyunchoi/SparseInst_Base.git
 # SparseInst code download
 cd SparseInst_Base
 ```
