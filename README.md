@@ -7,7 +7,7 @@
 # Setting
 My env: RTX 3060, CUDA 11.2
 
-Setting conda env:
+<b> Setting conda env: </b>
 
 ```bash
 conda create -n sparseinst python=3.8
