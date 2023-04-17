@@ -129,7 +129,7 @@ if __name__ == "__main__":
         
         cam = cv2.VideoCapture(0)
         if cam.isOpened:
-            file_path = "./output/test4.mp4"
+            file_path = "./output/test.mp4"
             fps = cam.get(cv2.CAP_PROP_FPS)
             fourcc = cv2.VideoWriter_fourcc(*'DIVX')
             width = cam.get(cv2.CAP_PROP_FRAME_WIDTH)
