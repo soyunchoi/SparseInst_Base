@@ -43,7 +43,7 @@ mkdir output
 ```bash
 python demo.py --config-file <CONFIG> --input <IMAGE-PATH> --output results --opts MODEL.WEIGHTS <MODEL-PATH>
 # example
-python demo.py --config-file configs/sparse_inst_r50_giam.yaml --video-input test.mp4 --output output --opt MODEL.WEIGHTS weights/sparse_inst_r50_giam_aug_2b7d68.pth INPUT.MIN_SIZE_TEST 512
+python demo.py --config-file configs/sparse_inst_r50_giam.yaml --video-input video.mp4 --output output --opt MODEL.WEIGHTS weights/sparse_inst_r50_giam_aug_2b7d68.pth INPUT.MIN_SIZE_TEST 512
 ```
 
 * <b> Webcam </b>
