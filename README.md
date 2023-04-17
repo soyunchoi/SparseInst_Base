@@ -51,7 +51,7 @@ python demo.py --config-file configs/sparse_inst_r50_giam.yaml --video-input tes
 python demo.py --config-file configs/sparse_inst_r50_giam.yaml --webcam --opt MODEL.WEIGHTS weights/sparse_inst_r50_giam_aug_2b7d68.pth INPUT.MIN_SIZE_TEST 512
 ```
 
-# Errors
+# Error Handling
 만약 아래와 같은 오류가 떴다면 아래의 해결방법을 통해 해결 가능
 
 <b> Error 1) </b>
