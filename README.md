@@ -6,7 +6,7 @@
 
 ## Code Updates
 
-* [2023/05/03] Add real-time actionable code with Realsense camera
+* [2023/05/03] Add real-time actionable code with Realsense camera in demo.py
 
 
 # Setting
