@@ -6,10 +6,16 @@ import os
 import time
 import cv2
 import tqdm
+import pyrealsense2 as rs
+import numpy as np
 
 from detectron2.config import get_cfg
 from detectron2.data.detection_utils import read_image
 from detectron2.utils.logger import setup_logger
+
+from detectron2.data import MetadataCatalog
+from detectron2.engine import DefaultPredictor
+from detectron2.utils.visualizer import Visualizer
 
 from sparseinst import VisualizationDemo, add_sparse_inst_config
 
@@ -44,8 +50,8 @@ def get_parser():
     parser.add_argument("--webcam", action="store_true",
                         help="Take inputs from webcam.")
     parser.add_argument("--video-input", help="Path to video file.")
-    ### add ###
-    parser.add_argument("--realsense", action="store_true", help="Take inputs from realsense")
+    parser.add_argument("--realsense", action="store_true", 
+                        help="Take inputs from realsense")
     parser.add_argument(
         "--input",
         nargs="+",
@@ -123,9 +129,10 @@ if __name__ == "__main__":
                     WINDOW_NAME, visualized_output.get_image()[:, :, ::-1])
                 if cv2.waitKey(0) == 27:
                     break  # esc to quit
+                    
+    ###### webcam ######                
     elif args.webcam:
         assert args.input is None, "Cannot have both --input and --webcam!"
-        # assert args.output is None, "output not yet supported with --webcam!"
         
         cam = cv2.VideoCapture(0)
         if cam.isOpened:
@@ -146,7 +153,7 @@ if __name__ == "__main__":
             out.release()
             cv2.destroyAllWindows()
 
-
+    ###### video ######
     elif args.video_input:
         video = cv2.VideoCapture(args.video_input)
         width = int(video.get(cv2.CAP_PROP_FRAME_WIDTH))
@@ -186,4 +193,76 @@ if __name__ == "__main__":
         else:
             cv2.destroyAllWindows()
 
+    ###### realsense ######
+    elif args.realsense:
+
+        predictor = DefaultPredictor(cfg)
+
+        # Configure depth and color streams
+        pipeline = rs.pipeline()
+        config = rs.config()
+
+        # Get device product line for setting a supporting resolution
+        pipeline_wrapper = rs.pipeline_wrapper(pipeline)
+        pipeline_profile = config.resolve(pipeline_wrapper)
+        device = pipeline_profile.get_device()
+        device_product_line = str(device.get_info(rs.camera_info.product_line))
+
+        found_rgb = False 
+        for s in device.sensors:
+            if s.get_info(rs.camera_info.name) == 'RGB Camera':
+                found_rgb = True
+                break
+        if not found_rgb:
+            print("The demo requires Depth camera with Color sensor")
+            exit(0)
+            
+        # Depth
+        config.enable_stream(rs.stream.depth, 640, 480, rs.format.z16, 30)
+
+        # RGB
+        if device_product_line == 'L500':
+            config.enable_stream(rs.stream.color, 960, 540, rs.format.bgr8, 30)
+        else:
+            config.enable_stream(rs.stream.color, 640, 480, rs.format.bgr8, 30)
+        
+        # Start streaming
+        pipeline.start(config)
+
+        try:
+            while True:
+
+                # Wait for a coherent pair of frames: depth and color
+                frames = pipeline.wait_for_frames()
+                depth_frame = frames.get_depth_frame()
+                color_frame = frames.get_color_frame()
+                if not depth_frame or not color_frame:
+                    continue
+
+                # Convert images to numpy arrays
+                depth_image = np.asanyarray(depth_frame.get_data())
+                color_image = np.asanyarray(color_frame.get_data())
+
+                # Apply colormap on depth image (image must be converted to 80bit per pixel first)
+                depth_colormap = cv2.applyColorMap(cv2.convertScaleAbs(depth_image, alpha=0.03), cv2.COLORMAP_JET)
+
+                depth_colormap_dim = depth_colormap.shape
+                color_colormap_dim = color_image.shape
+
+                outputs = predictor(color_image)
+
+                v = Visualizer(color_image[:, :, ::-1], MetadataCatalog.get(cfg.DATASETS.TEST[0]), scale=1.2)
+                instances = outputs["instances"].to("cpu")
+                instances = instances[instances.scores >= args.confidence_threshold]
+                v = v.draw_instance_predictions(instances)
+                result = v.get_image()[:, :, ::-1]
+                cv2.imshow(WINDOW_NAME, result)
+
+                # 종료 조건
+                if cv2.waitKey(1) == 27:
+                    break   # esc to quit
+
+
+        finally:
+            pipeline.stop()
         
