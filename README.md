@@ -41,6 +41,7 @@ mkdir output
 <sup>&#x021A1;</sup>: measured on RTX 3090.
 
 다운로드 이후, SparseInst_Base/weights 폴더 만들어서 안에 넣기
+After downloading, create a SparseInst_Base/weights folder and place it inside.
 
 <b> Testing </b>
 
@@ -58,6 +59,7 @@ python demo.py --config-file configs/sparse_inst_r50_giam.yaml --webcam --opt MO
 
 # Error Handling
 만약 아래와 같은 오류가 떴다면 아래의 해결방법을 통해 해결 가능
+If you encounter an error like the one below, you can resolve it using the following solution.
 
 <b> Error 1) </b>
 ```bash
@@ -65,7 +67,7 @@ File "/data/anaconda3/envs/sparseinst/lib/python3.8/site-packages/detectron2/uti
     _DetectedInstance(classes[i], boxes[i], mask_rle=None, color=None, ttl=8)
 TypeError: 'NoneType' object is not subscriptable
 ```
-<b> Sol) 들여쓰기 주의 </b> 
+<b> Sol) 들여쓰기 주의 Pay attention to indentation </b> 
 
   Go to `"/data/anaconda3/envs/sparseinst/lib/python3.8/site-packages/detectron2/utils/video_visualizer.py"`
   and replace Line 76-87 with the following:
